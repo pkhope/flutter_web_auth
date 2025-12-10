@@ -25,10 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    if (project.android.hasProperty("namespace")) {
-        namespace = "com.linusu.flutter_web_auth"
-    }
-
+    namespace "com.linusu.flutter_web_auth"   // ✅ direct namespace declaration
     compileSdk = 34
 
     compileOptions {
@@ -47,6 +44,11 @@ android {
 
     defaultConfig {
         minSdk = 21
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"  // ✅ modern runner
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
     }
 
     dependencies {
@@ -61,9 +63,13 @@ android {
 
             testLogging {
                events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
+               outputs.upToDateWhen { false }
                showStandardStreams = true
             }
         }
     }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
